@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
-using BluetoothRobotControlLib.Common.Sevices;
+using BluetoothRobotControlLib.Common.Services;
 using System.Diagnostics;
 
 namespace MipWindowLib.MipRobot
@@ -25,8 +25,8 @@ namespace MipWindowLib.MipRobot
         public MipRobotConstants.POSITION_VALUE Position { get; private set; }
         public event EventHandler<MipRobotConstants.POSITION_VALUE> MipPositionHandler;
 
-        public BluetoothRobotConstants.ACTIVIATION_STATUS ToyActivationStatus { get; private set; }
-        public event EventHandler<BluetoothRobotConstants.ACTIVIATION_STATUS> MipToyActivationStatusHandler;
+        public BluetoothRobotConstants.ACTIVATION_STATUS ToyActivationStatus { get; private set; }
+        public event EventHandler<BluetoothRobotConstants.ACTIVATION_STATUS> MipToyActivationStatusHandler;
 
         public int VoiceFirmwareVersion { get; private set; }
         public event EventHandler<int> MipVoiceFirmwareVersionHandler;
@@ -114,27 +114,35 @@ namespace MipWindowLib.MipRobot
         */
         public IAsyncAction ResetMipProductActivated()
         {
-            return SetMipProductionActivation((byte)BluetoothRobotConstants.ACTIVIATION_STATUS.FACTORY_DEFAULT);
+            return SetMipProductionActivation((byte)BluetoothRobotConstants.ACTIVATION_STATUS.FACTORY_DEFAULT);
         }
 
         public IAsyncAction ActivateMipProduct()
         {
-            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVIATION_STATUS.ACTIVATE);
+            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVATION_STATUS.ACTIVATE);
         }
 
         public IAsyncAction ActivateMipProductAndUpload()
         {
-            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVIATION_STATUS.ACTIVATE_SENT_TO_FLURRY);
+            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVATION_STATUS.ACTIVATE_SENT_TO_FLURRY);
         }
 
         public IAsyncAction ActivateMipHackerAndUpload()
         {
-            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVIATION_STATUS.HACKER_UART_USED_SENT_TO_FLURRY);
+            return SetMipProductionActivation(ToyActivationStatus | BluetoothRobotConstants.ACTIVATION_STATUS.HACKER_UART_USED_SENT_TO_FLURRY);
         }
 
         public IAsyncAction SetMipVolumeLevel(byte volume)
         {
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_VOLUME_LEVEL, volume).AsAsyncAction();
+        }
+
+        /*
+          
+         */
+        public IAsyncAction SetGestureRadarMode(MipRobotConstants.GESTURE_OR_RADAR_MODE mode)
+        {
+            return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_GESTURE_OR_RADAR_MODE, (byte)mode).AsAsyncAction();
         }
 
         /*
@@ -174,6 +182,11 @@ namespace MipWindowLib.MipRobot
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.DRIVE_CONTINOUS, driveValue, turnValue).AsAsyncAction();
         }
 
+        public IAsyncAction MipStop()
+        {
+            return SendMipCommand(MipRobotConstants.COMMAND_CODE.STOP).AsAsyncAction();
+        }
+
         public IAsyncAction MipDriveToward(int time, int speed)
         {
             return MipDriveWithRateAndTime(true, speed, time);
@@ -199,10 +212,11 @@ namespace MipWindowLib.MipRobot
             return MipTurnWithRate(-degrees, speed);
         }
 
-        public IAsyncAction MipTurnRightByDegress(int degrees, int speed)
+        public IAsyncAction MipTurnRightByDegrees(int degrees, int speed)
         {
             return MipTurnWithRate(degrees, speed);
         }
+
         public IAsyncAction MipDriveDistanceByCm(int distanceInCm, int degrees=0)
         {
             return SendMipCommand(
@@ -295,7 +309,7 @@ namespace MipWindowLib.MipRobot
 
         //private functions
 
-        private IAsyncAction SetMipProductionActivation(BluetoothRobotConstants.ACTIVIATION_STATUS status)
+        private IAsyncAction SetMipProductionActivation(BluetoothRobotConstants.ACTIVATION_STATUS status)
         {
             ToyActivationStatus = status;
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_TOY_ACTIVATED_STATUS, (byte)status).AsAsyncAction();
@@ -330,7 +344,7 @@ namespace MipWindowLib.MipRobot
         {
             switch (data[0])
             {
-                case (byte)MipRobotConstants.COMMAND_CODE.GET_GAME_MDOE:
+                case (byte)MipRobotConstants.COMMAND_CODE.GET_GAME_MODE:
                     if (data.Length == 2)
                     {
                         GameMode = data[1];
@@ -351,9 +365,9 @@ namespace MipWindowLib.MipRobot
                 case (byte)MipRobotConstants.COMMAND_CODE.GET_HARDWARE_VERSION:
                     if (data.Length == 3)
                     {
-                        for (byte i = 0; i < MipRobotConstants.VOICE_FIRWARE_MAPPING.Length; i++)
+                        for (byte i = 0; i < MipRobotConstants.VOICE_FIRMWARE_MAPPING.Length; i++)
                         {
-                            if (data[1] > MipRobotConstants.VOICE_FIRWARE_MAPPING[i])
+                            if (data[1] > MipRobotConstants.VOICE_FIRMWARE_MAPPING[i])
                             {
                                 VoiceFirmwareVersion = i;
                             }
@@ -385,9 +399,9 @@ namespace MipWindowLib.MipRobot
                 case (byte)MipRobotConstants.COMMAND_CODE.GET_TOY_ACTIVATED_STATUS:
                     if (data.Length == 2)
                     {
-                        ToyActivationStatus = BaseService.ConvertEnumFromInt<BluetoothRobotConstants.ACTIVIATION_STATUS>(data[1]);
+                        ToyActivationStatus = BaseService.ConvertEnumFromInt<BluetoothRobotConstants.ACTIVATION_STATUS>(data[1]);
 
-                        if (ToyActivationStatus.HasFlag(BluetoothRobotConstants.ACTIVIATION_STATUS.ACTIVATE))
+                        if (ToyActivationStatus.HasFlag(BluetoothRobotConstants.ACTIVATION_STATUS.ACTIVATE))
                         {
                             Task.Run(async () =>
                             {
@@ -424,6 +438,20 @@ namespace MipWindowLib.MipRobot
 
                         MipBootModeHandler?.Invoke(this, BootMode);
                     }
+                    break;
+                case (byte)MipRobotConstants.COMMAND_CODE.SET_HEAD_LED:
+                    Debug.WriteLine("head led");
+                    break;
+                case (byte)MipRobotConstants.COMMAND_CODE.CLAPS_DETECTED:
+                    Debug.WriteLine("claps");
+                    break;
+                case (byte)MipRobotConstants.COMMAND_CODE.GESTURE_DETECTED:
+                    Debug.WriteLine("gesture {0}", BaseService.ConvertEnumFromInt<MipRobotConstants.GESTURE>(data[1]));
+                    break;
+                case (byte)MipRobotConstants.COMMAND_CODE.RADAR_RESPONSE:
+                    Debug.WriteLine("radar {0}", BaseService.ConvertEnumFromInt<MipRobotConstants.RADAR_RESPONSE>(data[1]));
+                    break;
+                default:
                     break;
             }
         }
