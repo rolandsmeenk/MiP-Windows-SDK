@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}"
 EndProject
@@ -21,7 +21,9 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|Any CPU.Build.0 = Debug|x64
+		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|Any CPU.Deploy.0 = Debug|x64
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|ARM.ActiveCfg = Debug|ARM
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|ARM.Build.0 = Debug|ARM
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -32,6 +34,8 @@ Global
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|x86.Build.0 = Debug|x86
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Debug|x86.Deploy.0 = Debug|x86
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|Any CPU.ActiveCfg = Release|x86
+		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|Any CPU.Build.0 = Release|x86
+		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|Any CPU.Deploy.0 = Release|x86
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|ARM.ActiveCfg = Release|ARM
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|ARM.Build.0 = Release|ARM
 		{EE15AAB7-2F36-48D8-86F1-9E6BA8A89365}.Release|ARM.Deploy.0 = Release|ARM

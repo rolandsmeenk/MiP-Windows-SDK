@@ -6,15 +6,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Width="1920" Height="1080">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="ConnectButton" Content="Connect to MiP" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Margin="10,70,0,0"/>
-        <Button x:Name="DriveButton" Content="Drive" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
-        <Button x:Name="PlaySoundButton" Content="Play Sound" HorizontalAlignment="Left" Margin="10,450,0,0" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
-        <Button x:Name="ChangeChestButton" Content="Change Chest Color" HorizontalAlignment="Left" Margin="10,487,0,0" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
-        <Button x:Name="FalloverButton" Content="Fall Over" HorizontalAlignment="Left" Margin="10,524,0,0" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
-        <canvas:CanvasControl Draw="DriveCanvas_DrawEvent" ClearColor="Transparent" Width="300" Height="300" Margin="10,145,50,195" CreateResources="DriveCanvas_CreateResourcesEvent"  PointerPressed="DriveCanvas_PointerPressedEvent" PointerReleased="DriveCanvas_PointerReleasedEvent" PointerMoved="DriveCanvas_PointerMovedEvent" IsEnabled="False" x:Name="DriveCanvas"/>
-
+        <StackPanel Margin="0,48,0,-48">
+            <Button x:Name="ConnectButton" Content="Connect to MiP" Click="Button_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="Disabled" Content="Disabled" Click="Disabled_Click"/>
+                <Button x:Name="GestureButton" Content="Gesture" Click="GestureButton_Click"/>
+                <Button x:Name="RadarButton" Content="Radar" Click="RadarButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="PlaySoundButton" Content="Play Sound" Click="PlaySoundButton_Click"/>
+                <ComboBox x:Name="Sounds" ItemsSource="{Binding SoundCollection}" DisplayMemberPath="DisplayValue" SelectedValuePath="Value"/>
+            </StackPanel>
+            <Button x:Name="ChangeChestButton" Content="Change Chest Color" Click="ChangeChestButton_Click" IsEnabled="False"/>
+            <ComboBox x:Name="HeadLed1" ItemsSource="{Binding HeadLightCollection}" DisplayMemberPath="DisplayValue" SelectedValuePath="Value" SelectionChanged="HeadLed1_SelectionChanged"/>
+            <Button x:Name="FalloverButton" Content="Fall Over" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" IsEnabled="False"/>
+            <Button x:Name="DriveButton" Content="Drive" HorizontalAlignment="Left"  Click="Button_Click" IsEnabled="False"/>
+            <TextBlock Text="Volume Level"/>
+            <Slider x:Name="VolumeSlider" Height="50" Minimum="0" Maximum="9" ValueChanged="VolumeSlider_ValueChanged"/>
+            <TextBlock Text="Chest Color"/>
+            <Slider x:Name="ChestRSlider" Height="50" Minimum="0" Maximum="255" ValueChanged="ChestSlider_ValueChanged"/>
+            <Slider x:Name="ChestGSlider" Height="50" Minimum="0" Maximum="255" ValueChanged="ChestSlider_ValueChanged"/>
+            <Slider x:Name="ChestBSlider" Height="50" Minimum="0" Maximum="255" ValueChanged="ChestSlider_ValueChanged"/>
+            <Slider x:Name="ChestFadeSlider" Height="50" Minimum="0" Maximum="255" ValueChanged="ChestSlider_ValueChanged"/>
+            <TextBox x:Name="LogWindow" Height="100" Text="" AcceptsReturn="True" ScrollViewer.VerticalScrollMode="Auto"/>
+            <MediaElement x:Name="media" AutoPlay="False" MediaEnded="media_MediaEnded"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="Left90Button" Click="Left90Button_Click">90 Left</Button>
+                <Button x:Name="Left10Button" Click="Left10Button_Click">10 Left</Button>
+                <Button x:Name="Right10Button" Click="Right10Button_Click">10 Right</Button>
+                <Button x:Name="Right90Button" Click="Right90Button_Click">90 Right</Button>
+            </StackPanel>
+            <canvas:CanvasControl Draw="DriveCanvas_DrawEvent" ClearColor="LightGray" Width="300" Height="300" CreateResources="DriveCanvas_CreateResourcesEvent"  PointerPressed="DriveCanvas_PointerPressedEvent" PointerReleased="DriveCanvas_PointerReleasedEvent" PointerMoved="DriveCanvas_PointerMovedEvent" IsEnabled="False" x:Name="DriveCanvas"/>
+        </StackPanel>
     </Grid>
 </Page>
