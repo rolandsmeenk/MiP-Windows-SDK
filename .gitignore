@@ -1,2 +1,14 @@
 .hg
 .DS_Store
+/MipWindowLib/bin/Debug
+/MipWindowLib/obj/Debug
+/BluetoothRobotControlLib/bin
+/BluetoothRobotControlLib/bin
+/BluetoothRobotControlLib/obj
+*.suo
+/MipWindowLib/obj/Release
+/TestApp/bin
+/TestApp/obj/x64/Debug/intermediatexaml/TestApp.exe
+/TestApp/obj
+/.vs/config
+/TextFile1.txt
