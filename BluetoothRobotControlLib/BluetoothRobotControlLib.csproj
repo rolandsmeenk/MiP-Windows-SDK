@@ -109,15 +109,15 @@
   <ItemGroup>
     <Compile Include="Common\BluetoothRobot.cs" />
     <Compile Include="Common\BluetoothRobotConstants.cs" />
-    <Compile Include="Common\Services\BaseService.cs" />
-    <Compile Include="Common\Services\BatteryLevelService.cs" />
-    <Compile Include="Common\Services\DeviceInfoService.cs" />
-    <Compile Include="Common\Services\DFUService.cs" />
-    <Compile Include="Common\Services\ModuleParameterService.cs" />
-    <Compile Include="Common\Services\ReceiveDataService.cs" />
-    <Compile Include="Common\Services\RSSIReportService.cs" />
-    <Compile Include="Common\Services\SendDataService.cs" />
-    <Compile Include="Common\Services\DeviceSettingService.cs" />
+    <Compile Include="Common\Sevices\BaseService.cs" />
+    <Compile Include="Common\Sevices\BatteryLevelService.cs" />
+    <Compile Include="Common\Sevices\DeviceInfoService.cs" />
+    <Compile Include="Common\Sevices\DFUService.cs" />
+    <Compile Include="Common\Sevices\ModuleParameterService.cs" />
+    <Compile Include="Common\Sevices\ReceiveDataService.cs" />
+    <Compile Include="Common\Sevices\RSSIReportService.cs" />
+    <Compile Include="Common\Sevices\SendDataService.cs" />
+    <Compile Include="Common\Sevices\DeviceSettingService.cs" />
     <Compile Include="Common\BluetoothRobotFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\BluetoothRobotControlLib.rd.xml" />

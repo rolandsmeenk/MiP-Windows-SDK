@@ -1,4 +1,4 @@
-﻿using BluetoothRobotControlLib.Common.Services;
+﻿using BluetoothRobotControlLib.Common.Sevices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -157,12 +157,12 @@ namespace BluetoothRobotControlLib.Common
             return GetService<DeviceInfoService>(BaseService.TYPE.DEVICE_INFO).ReadModuleSoftwareVersion();
         }
 
-        public Task<BluetoothRobotConstants.ACTIVATION_STATUS> GetBTProductActiviationStatus()
+        public Task<BluetoothRobotConstants.ACTIVIATION_STATUS> GetBTProductActiviationStatus()
         {
             return GetService<DeviceSettingService>(BaseService.TYPE.DEVICE_SETTING).ReadProductActivationStatus(); ;
         }
 
-        public Task<bool> SetBTProductActiviationStatus(BluetoothRobotConstants.ACTIVATION_STATUS status)
+        public Task<bool> SetBTProductActiviationStatus(BluetoothRobotConstants.ACTIVIATION_STATUS status)
         {
             return GetService<DeviceSettingService>(BaseService.TYPE.DEVICE_SETTING).WriteProductActivationStatus(status);
         }

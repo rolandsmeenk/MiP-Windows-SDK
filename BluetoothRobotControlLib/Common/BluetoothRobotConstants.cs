@@ -32,7 +32,7 @@ namespace BluetoothRobotControlLib.Common
 		Activation Status
 		*/
         [Flags]
-        public enum ACTIVATION_STATUS : byte
+        public enum ACTIVIATION_STATUS : byte
         {
             NOT_READ = 0x80,
             FACTORY_DEFAULT = 0x00,

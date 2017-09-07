@@ -15,14 +15,16 @@ namespace MipWindowLib.MipRobot
             SET_IR_REMOTE_ONOFF = 0x10,
             GET_IR_REMOTE_ONOFF = 0x11,
 
-            RADAR_RESPONSE = 0x0C,               // 0x01: No object Or object disappear, 0x02: See object in 10cm ~30cm, 0x03: See object less than 10cm
-            SET_GESTURE_OR_RADAR_MODE = 0x0C,   //  0x00: Disable Gesture and Radar, 0x02: Gesture Mode on (Disable Radar), 0x04: Radar Mode on (Disable Gesture)
+            SET_RADAR_MODE = 0x0C,
             GET_RADAR_MODE = 0x0D,
 
-            GESTURE_DETECTED = 0x0A,            // Left: 0x0A, Right: 0x0B Center Sweep Left: 0x0C Center Sweep Right: 0x0D Center Hold: 0x0E Forward: 0x0F Back: 0x10 (700ms hold)
+            SET_DETECTION_MODE = 0x0E,
+            GET_DETECTION_MODE = 0x0F,
+
+            SET_GESTURE_MODE = 0x0A,
             GET_GESTURE_MODE = 0x0B,
 
-            CHECK_BOOT_MODE = 0xFF, //
+            CHECK_BOOT_MODE = 0xFF,
 
             SHOULD_POWER_OFF = 0xFB,
             REBOOT = 0xFB,
@@ -34,7 +36,7 @@ namespace MipWindowLib.MipRobot
             GET_USER_DATA = 0x13,
 
             SET_GAME_MODE = 0x76,
-            GET_GAME_MODE = 0x82,        
+            GET_GAME_MDOE = 0x78,
 
             SET_VOLUME_LEVEL = 0x15,
             GET_VOLUME_LEVEL = 0x16,
@@ -42,7 +44,7 @@ namespace MipWindowLib.MipRobot
             GET_SOFTWARE_VERSION = 0x14,
             GET_HARDWARE_VERSION = 0x19,
 
-            SHOULD_FALLOVER = 0x08,         // On back: 0x00, Face down: 0x01
+            SHOULD_FALLOVER = 0x08,
 
             PLAY_SOUND = 0x06,
 
@@ -50,8 +52,8 @@ namespace MipWindowLib.MipRobot
 
             SHAKE_DETECTED = 0x1A,
 
-            GET_ODOMETER = 0x85,
-            RESET_ODOMETER = 0x86,
+            GET_ODEMETER = 0x85,
+            RESET_ODEMETER = 0x86,
 
             GET_STATUS = 0x79,
 
@@ -59,9 +61,8 @@ namespace MipWindowLib.MipRobot
             GET_CHEST_RGB_LED = 0x83,
             SET_CHEST_RGB_LED = 0x84,
             FLASH_CHEST_RGB_LED = 0x89,
-
-            GET_HEAD_LED = 0x8B, 
-            SET_HEAD_LED = 0x8A,
+            GET_HEAD_LED = 0x8A,
+            SET_HEAD_LED = 0x8B,
 
             TRANSMIT_IR_COMMAND = 0x8C,
             RECEIVE_IR_COMMAND = 0x03,
@@ -85,10 +86,9 @@ namespace MipWindowLib.MipRobot
             SET_CLAPS_DETECTION_TIMING = 0x20,
 
             HACKER_UART_CONNECTED_STATUS_UPDATED = 0x1C,
-
-            SET_MIP_DETECTION_MODE = 0x0E,      // Off: 0x00, On: 0x1-255 for ID number, BYTE 2 : Set IR Tx power(1120)(About 1cm-300cm)
-            GET_MIP_DETECTION_STATUS = 0x0F,    // BYTE 1 : Off: 0x00, On: 0x1-255 for ID number, BYTE 2 : Set IR Tx power(1120)(About 1cm-300cm)
-            OTHER_MIP_DETECTED = 0x04,          // BYTE 1 : ID number, if got the 0x00 means find one MIP without setting number
+            SET_MIP_DETECTION_MODE = 0x0E,
+            GET_MIP_DETECTION_MODE = 0x0F,
+            OTHER_MIP_DETECTED = 0x04,
 
             GET_UP_FROM_POSITION = 0x23,
 
@@ -104,7 +104,7 @@ namespace MipWindowLib.MipRobot
             FW_SPEED1 = 0x00,
             BW_SPEED1 = 0x20,
             LEFT_SPEED1 = 0x60,
-            RIGHT_SPEED1 = 0x40
+            RIGHT_SPEED1 = 040
         }
 
         public enum SOUND_FILE : byte
@@ -242,53 +242,20 @@ namespace MipWindowLib.MipRobot
         public const byte BOARDCAST_DATA_AVATAR_ICON = 0x00;
 
         /*
-		 Head LED value
+		Head LED value
 		*/
         public enum HEAD_LED : byte
         {
             OFF = 0x00,
             ON,
             BLINK_SLOW,
-            BLINK_FAST
+            BLINK_FAST,
+            FADE_IN
         }
 
         /*
-		Gesture
+		Ping Response
 		*/
-        public enum GESTURE : byte
-        {
-            LEFT = 0x0A,
-            RIGHT = 0x0B,
-            CENTER_SEEWP_LEFT = 0x0C,
-            CENTER_SWEEP_RIGHT = 0x0D,
-            CENTER_HOLD = 0x0E,
-            FORWARD = 0x0F,
-            BACK = 0x10
-        }
-
-        /*
-         Gesture or radar mode
-        */
-        public enum GESTURE_OR_RADAR_MODE : byte
-        {
-            DISABLED = 0x00,
-            GESTURE = 0x02,                   // Gesture Mode on (Disable Radar)
-            RADAR = 0x04,                     // Radar Mode on (Disable Gesture)
-        }
-
-        /*
-        Radar Response
-        */
-        public enum RADAR_RESPONSE : byte
-        {
-            NO_OBJECT = 0x01,   // No object Or object disappear
-            OBJECT = 0x02,      // 0x02: See object in 10cm ~30cm
-            OBJECT_CLOSE = 0x03 // 0x03: See object less than 10cm
-        }
-
-        /*
-        Ping Response
-        */
         public enum PING_RESPONSE : byte
         {
             NORMAL_ROM_NO_BOOT_LOADER = 0x00,
@@ -308,6 +275,6 @@ namespace MipWindowLib.MipRobot
         /*
         voice firmware version
         */
-        public static readonly byte[] VOICE_FIRMWARE_MAPPING = new byte[] { 0, 6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94 };
+        public static readonly byte[] VOICE_FIRWARE_MAPPING = new byte[] { 0, 6, 14, 22, 30, 38, 46, 54, 62, 70, 78, 86, 94 };
     }
 }

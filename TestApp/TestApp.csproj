@@ -22,7 +22,6 @@
     <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-    <PackageCertificateThumbprint>FF0D1B6D14B4678B21D6218F710018F3BF6B85CE</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,7 +98,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />
-    <None Include="TestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -114,6 +112,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="TestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Joystick.png" />
@@ -137,14 +136,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BluetoothRobotControlLib\BluetoothRobotControlLib.csproj">
-      <Project>{5f3b7c78-aec3-4026-bcf7-2e761140ea83}</Project>
-      <Name>BluetoothRobotControlLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MipWindowLib\MipWindowLib.csproj">
-      <Project>{9c007ee6-ebfb-4d6a-a804-5f6f72271787}</Project>
-      <Name>MipWindowLib</Name>
-    </ProjectReference>
+    <Reference Include="BluetoothRobotControlLib">
+      <HintPath>..\Libraries\BluetoothRobotControlLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MipWindowLib">
+      <HintPath>..\Libraries\MipWindowLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
