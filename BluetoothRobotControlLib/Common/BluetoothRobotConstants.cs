@@ -50,10 +50,10 @@ namespace BluetoothRobotControlLib.Common
         public static readonly Guid MODULE_PARAMETER_BT_COMMUNICATION_INTERVAL_CHARACTERISTIC_UUID = new Guid("0000ff92-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_UART_BAUD_RATE_CHARACTERISTIC_UUID = new Guid("0000ff93-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_RESET_MODULE_CHARACTERISTIC_UUID = new Guid("0000ff94-0000-1000-8000-00805f9b34fb");
-        public static readonly Guid MODULE_PARAMETER_BOARDCAST_PERIOD_CHARACTERISTIC_UUID = new Guid("0000ff95-0000-1000-8000-00805f9b34fb");
+        public static readonly Guid MODULE_PARAMETER_BROADCAST_PERIOD_CHARACTERISTIC_UUID = new Guid("0000ff95-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_PRODUCT_ID_CHARACTERISTIC_UUID = new Guid("0000ff96-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_TRANSMIT_POWER_CHARACTERISTIC_UUID = new Guid("0000ff97-0000-1000-8000-00805f9b34fb");
-        public static readonly Guid MODULE_PARAMETER_CUSTOM_BOARDCAST_DATA_CHARACTERISTIC_UUID = new Guid("0000ff98-0000-1000-8000-00805f9b34fb");
+        public static readonly Guid MODULE_PARAMETER_CUSTOM_BROADCAST_DATA_CHARACTERISTIC_UUID = new Guid("0000ff98-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_REMOTE_CONTROL_EXTENSION_CHARACTERISTIC_UUID = new Guid("0000ff99-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_STANDBY_MODE_CHARACTERISTIC_UUID = new Guid("0000ff9a-0000-1000-8000-00805f9b34fb");
         public static readonly Guid MODULE_PARAMETER_SET_BT_COMMUNICATION_DATA_CHARACTERISTIC_UUID = new Guid("0000ff9b-0000-1000-8000-00805f9b34fb");
@@ -83,9 +83,9 @@ namespace BluetoothRobotControlLib.Common
         }
 
         /*
-        Boardcast Period
+        Broadcast Period
         */
-        public enum BOARDCAST_PERIOD : byte
+        public enum BROADCAST_PERIOD : byte
         {
             PERIOD_200MS = 0x00,
             PERIOD_500MS = 0x01,
@@ -117,7 +117,7 @@ namespace BluetoothRobotControlLib.Common
             SAVE_IO_STATE = 0x00,
             FORCE_SLEEP_MODE = 0x01,
             DISCONNECT_BT_CLIENT = 0x02,
-            WRITE_CUSTOM_BOARDCAST_DATA_TO_FLASH = 0x03
+            WRITE_CUSTOM_BROADCAST_DATA_TO_FLASH = 0x03
         }
     }
 }

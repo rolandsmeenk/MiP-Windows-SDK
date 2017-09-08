@@ -14,7 +14,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<int> ReadBatteryLevel()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.BATTERY_LEVEL_REPORT_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.BATTERY_LEVEL_REPORT_CHARACTERISTIC_UUID);
             return BaseService.ConvertIntFromBytes(data);
         }
     }

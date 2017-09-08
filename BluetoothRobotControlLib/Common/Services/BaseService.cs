@@ -85,7 +85,7 @@ namespace BluetoothRobotControlLib.Common.Services
             return false;
         }
 
-        protected async Task<byte[]> ReadChacateristicValueAsync(Guid characteristicUUID)
+        protected async Task<byte[]> ReadCharacteristicValueAsync(Guid characteristicUUID)
         {
             if (Service == null)
             {
@@ -108,6 +108,7 @@ namespace BluetoothRobotControlLib.Common.Services
             return null;
         }
 
+        GattCharacteristic characteristic;
         protected async Task<bool> SetupCharacteristicNotifyAsync(Guid characteristicUUID, bool enable, TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs> callback)
         {
             if (Service == null)
@@ -117,7 +118,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
             if (Service != null)
             {
-                GattCharacteristic characteristic = Service.GetCharacteristics(characteristicUUID).FirstOrDefault();
+                characteristic = Service.GetCharacteristics(characteristicUUID).FirstOrDefault();
                 if (characteristic != null)
                 {
                     GattClientCharacteristicConfigurationDescriptorValue value = enable ? GattClientCharacteristicConfigurationDescriptorValue.Notify : GattClientCharacteristicConfigurationDescriptorValue.None;

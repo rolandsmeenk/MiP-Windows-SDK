@@ -239,7 +239,7 @@ namespace MipWindowLib.MipRobot
             BACK_WITH_KICKSTAND
         }
 
-        public const byte BOARDCAST_DATA_AVATAR_ICON = 0x00;
+        public const byte BROADCAST_DATA_AVATAR_ICON = 0x00;
 
         /*
 		 Head LED value

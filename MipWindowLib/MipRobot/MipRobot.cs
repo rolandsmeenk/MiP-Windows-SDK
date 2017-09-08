@@ -75,6 +75,11 @@ namespace MipWindowLib.MipRobot
             return result;
         }
 
+        public IAsyncAction Disconnect()
+        {
+            return SendMipCommand(MipRobotConstants.COMMAND_CODE.SHOULD_FORCE_BLE_DISCONNECT).AsAsyncAction(); 
+        }
+
         /*
         Read Info
         */
@@ -440,7 +445,9 @@ namespace MipWindowLib.MipRobot
                     }
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.SET_HEAD_LED:
-                    Debug.WriteLine("head led");
+                    {
+                        //MipBootModeHandler?.Invoke(this, BootMode);
+                    }
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.CLAPS_DETECTED:
                     Debug.WriteLine("claps");

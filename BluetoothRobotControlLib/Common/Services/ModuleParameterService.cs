@@ -18,7 +18,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<string> ReadBTDeviceName()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_DEVICE_NAME_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_DEVICE_NAME_CHARACTERISTIC_UUID);
 
             return BaseService.ConvertStringFromByes(data);
         }
@@ -44,7 +44,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<int> ReadBTCommunicationInterval()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BT_COMMUNICATION_INTERVAL_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BT_COMMUNICATION_INTERVAL_CHARACTERISTIC_UUID);
 
             return BaseService.ConvertIntFromBytes(data);
         }
@@ -56,7 +56,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<BluetoothRobotConstants.UART_BAUD_RATE> ReadUartBuadRate()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_UART_BAUD_RATE_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_UART_BAUD_RATE_CHARACTERISTIC_UUID);
 
             return BaseService.ConvertEnumFromBytes<BluetoothRobotConstants.UART_BAUD_RATE>(data);
         }
@@ -86,20 +86,20 @@ namespace BluetoothRobotControlLib.Common.Services
             return await ResetModule(BluetoothRobotConstants.MODULE_PARAMETER.RESET_MODULE_TO_FACTORY_SETTING);
         }
 
-        public async Task<BluetoothRobotConstants.BOARDCAST_PERIOD> ReadBoardcastPeriod()
+        public async Task<BluetoothRobotConstants.BROADCAST_PERIOD> ReadBroadcastPeriod()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BOARDCAST_PERIOD_CHARACTERISTIC_UUID);
-            return BaseService.ConvertEnumFromBytes<BluetoothRobotConstants.BOARDCAST_PERIOD>(data);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BROADCAST_PERIOD_CHARACTERISTIC_UUID);
+            return BaseService.ConvertEnumFromBytes<BluetoothRobotConstants.BROADCAST_PERIOD>(data);
         }
 
-        public async Task<bool> WriteBoardcastPeriod(BluetoothRobotConstants.BOARDCAST_PERIOD period)
+        public async Task<bool> WriteBroadcastPeriod(BluetoothRobotConstants.BROADCAST_PERIOD period)
         {
-            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BOARDCAST_PERIOD_CHARACTERISTIC_UUID, new byte[] { (byte)period });
+            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_BROADCAST_PERIOD_CHARACTERISTIC_UUID, new byte[] { (byte)period });
         }
 
         public async Task<short> ReadProductId()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_PRODUCT_ID_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_PRODUCT_ID_CHARACTERISTIC_UUID);
             return BaseService.ConvertShortFromBytes(data);
         }
 
@@ -110,7 +110,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<BluetoothRobotConstants.TRANSMIT_POWER> ReadTransmitPower()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_TRANSMIT_POWER_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_TRANSMIT_POWER_CHARACTERISTIC_UUID);
             return BaseService.ConvertEnumFromBytes<BluetoothRobotConstants.TRANSMIT_POWER>(data);
         }
 
@@ -119,20 +119,20 @@ namespace BluetoothRobotControlLib.Common.Services
             return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_TRANSMIT_POWER_CHARACTERISTIC_UUID, new byte[] { (byte)power });
         }
 
-        public async Task<bool> EnableToReadBoardcastData(bool enable, TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs> callback)
+        public async Task<bool> EnableToReadBroadcastData(bool enable, TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs> callback)
         {
-            return await base.SetupCharacteristicNotifyAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BOARDCAST_DATA_CHARACTERISTIC_UUID, enable, callback);
+            return await base.SetupCharacteristicNotifyAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BROADCAST_DATA_CHARACTERISTIC_UUID, enable, callback);
         }
 
-        public async Task<bool> WriteBoardcastData(Dictionary<byte, byte> data)
+        public async Task<bool> WriteBroadcastData(Dictionary<byte, byte> data)
         {
-            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BOARDCAST_DATA_CHARACTERISTIC_UUID, BaseService.ConvertBytesFromDictionary(data));
+            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BROADCAST_DATA_CHARACTERISTIC_UUID, BaseService.ConvertBytesFromDictionary(data));
         }
 
-        public async Task<bool> WriteBoardcastDataToDefault()
+        public async Task<bool> WriteBroadcastDataToDefault()
         {
             byte[] data = new byte[16];
-            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BOARDCAST_DATA_CHARACTERISTIC_UUID, data);
+            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BROADCAST_DATA_CHARACTERISTIC_UUID, data);
         }
 
         public async Task<bool> ForceModuleSleep()
@@ -145,14 +145,14 @@ namespace BluetoothRobotControlLib.Common.Services
             return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_REMOTE_CONTROL_EXTENSION_CHARACTERISTIC_UUID, new byte[] { (byte)BluetoothRobotConstants.REMOTE_CONTROL_EXTENSION.SAVE_IO_STATE });
         }
 
-        public async Task<bool> WriteCurrentCustomBoardcastDataToFlash()
+        public async Task<bool> WriteCurrentCustomBroadcastDataToFlash()
         {
-            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_REMOTE_CONTROL_EXTENSION_CHARACTERISTIC_UUID, new byte[] { (byte)BluetoothRobotConstants.REMOTE_CONTROL_EXTENSION.WRITE_CUSTOM_BOARDCAST_DATA_TO_FLASH });
+            return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_REMOTE_CONTROL_EXTENSION_CHARACTERISTIC_UUID, new byte[] { (byte)BluetoothRobotConstants.REMOTE_CONTROL_EXTENSION.WRITE_CUSTOM_BROADCAST_DATA_TO_FLASH });
         }
 
         public async Task<bool> ReadStandByPulseSleepMode()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_STANDBY_MODE_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_STANDBY_MODE_CHARACTERISTIC_UUID);
             return BaseService.ConvertBooleanFromBytes(data);
         }
 
@@ -166,12 +166,12 @@ namespace BluetoothRobotControlLib.Common.Services
             return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_STANDBY_MODE_CHARACTERISTIC_UUID, new byte[] { (byte)BluetoothRobotConstants.REMOTE_CONTROL_EXTENSION.DISCONNECT_BT_CLIENT });
         }
 
-        public async Task<bool> WriteConnectedBoadcastData(byte[] data)
+        public async Task<bool> WriteConnectedBroadcastData(byte[] data)
         {
             return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_SET_BT_COMMUNICATION_DATA_CHARACTERISTIC_UUID, data);
         }
 
-        public async Task<bool> EnableConnectedBoardcast(bool enable)
+        public async Task<bool> EnableConnectedBroadcast(bool enable)
         {
             return await base.WriteCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_SET_BT_COMMUNICATION_ONOFF_CHARACTERISTIC_UUID, new byte[] { (byte)(enable ? 1 : 0) });
         }

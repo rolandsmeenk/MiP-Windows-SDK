@@ -25,7 +25,7 @@ namespace BluetoothRobotControlLib.Common.Services
 
         public async Task<int> GetInterval()
         {
-            byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.RSSI_REPORT_SET_INTERVAL_CHARACTERISTIC_UUID);
+            byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.RSSI_REPORT_SET_INTERVAL_CHARACTERISTIC_UUID);
             return BaseService.ConvertIntFromBytes(data);
         }
 

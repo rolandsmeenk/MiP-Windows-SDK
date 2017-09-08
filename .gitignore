@@ -12,3 +12,6 @@
 /TestApp/obj
 /.vs/config
 /TextFile1.txt
+/MipWindowLib/obj
+/MipWindowLib/Backup
+/TestApp/Backup

@@ -15544,16 +15544,16 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\MipWindowLib\\MipWindowLib.csproj",
+      "projectUniqueName": "C:\\Store\\Libraries\\MiP-Windows-SDK\\MipWindowLib\\MipWindowLib.csproj",
       "projectName": "MipWindowLib",
-      "projectPath": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\MipWindowLib\\MipWindowLib.csproj",
-      "projectJsonPath": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\MipWindowLib\\project.json",
+      "projectPath": "C:\\Store\\Libraries\\MiP-Windows-SDK\\MipWindowLib\\MipWindowLib.csproj",
+      "projectJsonPath": "C:\\Store\\Libraries\\MiP-Windows-SDK\\MipWindowLib\\project.json",
       "projectStyle": "ProjectJson",
       "frameworks": {
         "uap10.0": {
           "projectReferences": {
-            "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj": {
-              "projectPath": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj"
+            "C:\\Store\\Libraries\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj": {
+              "projectPath": "C:\\Store\\Libraries\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj"
             }
           }
         }

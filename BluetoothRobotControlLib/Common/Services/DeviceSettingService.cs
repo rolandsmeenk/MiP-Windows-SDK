@@ -18,7 +18,7 @@ namespace BluetoothRobotControlLib.Common.Services
         {
             if (activationStatus == BluetoothRobotConstants.ACTIVATION_STATUS.NOT_READ)
             {
-                byte[] data = await base.ReadChacateristicValueAsync(BluetoothRobotConstants.DEVICE_SETTING_PRODUCT_ACTIVIATION_CHARACTERISTIC_UUID);
+                byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.DEVICE_SETTING_PRODUCT_ACTIVIATION_CHARACTERISTIC_UUID);
                 activationStatus = BaseService.ConvertEnumFromBytes<BluetoothRobotConstants.ACTIVATION_STATUS>(data);
             }
 

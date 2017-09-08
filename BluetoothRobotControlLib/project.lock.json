@@ -15490,10 +15490,10 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj",
+      "projectUniqueName": "C:\\Store\\Libraries\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj",
       "projectName": "BluetoothRobotControlLib",
-      "projectPath": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj",
-      "projectJsonPath": "C:\\Store\\Develop\\Project\\MiP-Windows-SDK\\BluetoothRobotControlLib\\project.json",
+      "projectPath": "C:\\Store\\Libraries\\MiP-Windows-SDK\\BluetoothRobotControlLib\\BluetoothRobotControlLib.csproj",
+      "projectJsonPath": "C:\\Store\\Libraries\\MiP-Windows-SDK\\BluetoothRobotControlLib\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {

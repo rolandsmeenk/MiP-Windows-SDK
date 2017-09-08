@@ -17,7 +17,7 @@ namespace BluetoothRobotControlLib.Common
 
         protected Dictionary<BaseService.TYPE, BaseService> Services { get; private set; }
 
-        public Dictionary<byte, byte> CustomBoardcastData { get; protected set; }
+        public Dictionary<byte, byte> CustomBroadcastData { get; protected set; }
 
         //public event handlers
 
@@ -104,9 +104,9 @@ namespace BluetoothRobotControlLib.Common
             {
                 Debug.WriteLine("RSSI: " + BaseService.ConvertIntFromBytes(data));
             }
-            else if (characteristic.Uuid == BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BOARDCAST_DATA_CHARACTERISTIC_UUID)
+            else if (characteristic.Uuid == BluetoothRobotConstants.MODULE_PARAMETER_CUSTOM_BROADCAST_DATA_CHARACTERISTIC_UUID)
             {
-                CustomBoardcastData = BaseService.ConvertDictionaryFromBytes(data);
+                CustomBroadcastData = BaseService.ConvertDictionaryFromBytes(data);
             }
         }
 
@@ -157,7 +157,7 @@ namespace BluetoothRobotControlLib.Common
             return GetService<DeviceInfoService>(BaseService.TYPE.DEVICE_INFO).ReadModuleSoftwareVersion();
         }
 
-        public Task<BluetoothRobotConstants.ACTIVATION_STATUS> GetBTProductActiviationStatus()
+        public Task<BluetoothRobotConstants.ACTIVATION_STATUS> GetBTProductActivationStatus()
         {
             return GetService<DeviceSettingService>(BaseService.TYPE.DEVICE_SETTING).ReadProductActivationStatus(); ;
         }
@@ -167,7 +167,7 @@ namespace BluetoothRobotControlLib.Common
             return GetService<DeviceSettingService>(BaseService.TYPE.DEVICE_SETTING).WriteProductActivationStatus(status);
         }
 
-        public Task<bool> BTNordicReoobtToMode(byte mode)
+        public Task<bool> BTNordicRebootToMode(byte mode)
         {
             return GetService<DFUService>(BaseService.TYPE.DFU).RebootToMode(mode);
         }
@@ -187,12 +187,12 @@ namespace BluetoothRobotControlLib.Common
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadBTCommunicationInterval();
         }
 
-        public Task<BluetoothRobotConstants.UART_BAUD_RATE> GetBTUARTBuardRate()
+        public Task<BluetoothRobotConstants.UART_BAUD_RATE> GetBTUARTBaudRate()
         {
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadUartBuadRate();
         }
 
-        public Task<bool> SetBTUARTBuardRate(BluetoothRobotConstants.UART_BAUD_RATE rate)
+        public Task<bool> SetBTUARTBaudRate(BluetoothRobotConstants.UART_BAUD_RATE rate)
         {
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteUartBuadRate(rate);
         }
@@ -214,14 +214,14 @@ namespace BluetoothRobotControlLib.Common
             }
         }
 
-        public Task<bool> SetBTBoardcastPeriod(BluetoothRobotConstants.BOARDCAST_PERIOD period)
+        public Task<bool> SetBTBroadcastPeriod(BluetoothRobotConstants.BROADCAST_PERIOD period)
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBoardcastPeriod(period);
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBroadcastPeriod(period);
         }
 
-        public Task<BluetoothRobotConstants.BOARDCAST_PERIOD> GetBTBoadrcastPeriod()
+        public Task<BluetoothRobotConstants.BROADCAST_PERIOD> GetBTBroadcastPeriod()
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadBoardcastPeriod();
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadBroadcastPeriod();
         }
 
         public Task<bool> SetBTProductId(short id)
@@ -244,19 +244,19 @@ namespace BluetoothRobotControlLib.Common
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadTransmitPower();
         }
 
-        public Task<bool> SetBTBoardcstaData(Dictionary<byte, byte> data)
+        public Task<bool> SetBTBroadcastData(Dictionary<byte, byte> data)
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBoardcastData(data);
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBroadcastData(data);
         }
 
-        public Task<bool> SetBTBoardcastDataToDefault()
+        public Task<bool> SetBTBroadcastDataToDefault()
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBoardcastDataToDefault();
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteBroadcastDataToDefault();
         }
 
-        public Task<bool> EnableToGetBTBoardcastData(bool enable)
+        public Task<bool> EnableToGetBTBroadcastData(bool enable)
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).EnableToReadBoardcastData(enable, DidCharacteristicNotify);
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).EnableToReadBroadcastData(enable, DidCharacteristicNotify);
         }
 
         public Task<bool> ForceBTModuleSleep()
@@ -269,7 +269,7 @@ namespace BluetoothRobotControlLib.Common
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).SaveCurrentIOState();
         }
 
-        public Task<bool> SetBTStanBydPulseSleepMode(bool pulseSleepMode)
+        public Task<bool> SetBTStandBydPulseSleepMode(bool pulseSleepMode)
         {
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteStandByPulseSleepMode(pulseSleepMode);
         }
@@ -279,19 +279,19 @@ namespace BluetoothRobotControlLib.Common
             return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).ReadStandByPulseSleepMode();
         }
 
-        public Task<bool> SaveBTBoardcastDataToFlash()
+        public Task<bool> SaveBTBroadcastDataToFlash()
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteCurrentCustomBoardcastDataToFlash();
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteCurrentCustomBroadcastDataToFlash();
         }
 
-        public Task<bool> SetBTConnectedBoardcastData(byte[] data)
+        public Task<bool> SetBTConnectedBroadcastData(byte[] data)
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteConnectedBoadcastData(data);
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).WriteConnectedBroadcastData(data);
         }
 
-        public Task<bool> EnableBTConnectedBoardcast(bool enable)
+        public Task<bool> EnableBTConnectedBroadcast(bool enable)
         {
-            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).EnableConnectedBoardcast(enable);
+            return GetService<ModuleParameterService>(BaseService.TYPE.MODULE_PARAMETER).EnableConnectedBroadcast(enable);
         }
     }
 }
