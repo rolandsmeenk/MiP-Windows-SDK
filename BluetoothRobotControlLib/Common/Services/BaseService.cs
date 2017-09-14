@@ -166,12 +166,12 @@ namespace BluetoothRobotControlLib.Common.Services
             return -1;
         }
 
-        public static string ConvertStringFromByes(byte[] bytes)
+        public static string ConvertStringFromBytes(byte[] bytes)
         {
             return UTF8Encoding.UTF8.GetString(bytes);
         }
 
-        public static string ConvertHexStringFromByes(byte[] bytes)
+        public static string ConvertHexStringFromBytes(byte[] bytes)
         {
             return BitConverter.ToString(bytes).Replace("-", String.Empty);
         }

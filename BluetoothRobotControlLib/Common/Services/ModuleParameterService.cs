@@ -20,7 +20,7 @@ namespace BluetoothRobotControlLib.Common.Services
         {
             byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.MODULE_PARAMETER_DEVICE_NAME_CHARACTERISTIC_UUID);
 
-            return BaseService.ConvertStringFromByes(data);
+            return BaseService.ConvertStringFromBytes(data);
         }
 
         public async Task<bool> WriteBTDeviceName(string name)

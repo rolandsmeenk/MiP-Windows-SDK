@@ -16,14 +16,14 @@ namespace BluetoothRobotControlLib.Common.Services
         {
             byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.DEVICE_INFO_SYSTEM_ID_CHARACTERISTIC_UUID);
 
-            return BaseService.ConvertHexStringFromByes(data);
+            return BaseService.ConvertHexStringFromBytes(data);
         }
 
         public async Task<string> ReadModuleSoftwareVersion()
         {
             byte[] data = await base.ReadCharacteristicValueAsync(BluetoothRobotConstants.DEVICE_INFO_MODULE_SOFTWARE_CHARACTERISTIC_UUID);
 
-            return BaseService.ConvertStringFromByes(data);
+            return BaseService.ConvertStringFromBytes(data);
         }
     }
 }
