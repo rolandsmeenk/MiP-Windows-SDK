@@ -239,7 +239,7 @@ namespace TestApp
             
         }
 
-        private void Mip_MipGameModeHandler(object sender, byte e)
+        private void Mip_MipGameModeHandler(object sender, MipRobotConstants.GAME_MODE mode)
         {
 
         }

@@ -239,6 +239,30 @@ namespace MipWindowLib.MipRobot
             BACK_WITH_KICKSTAND
         }
 
+        /*
+        Game Mode
+         */
+        public enum GAME_MODE : byte
+        {
+            APP = 0X01,
+            CAGE,
+            TRACKING,
+            DANCE,
+            DEFAULT,
+            STACK,
+            TRICK,
+            ROAM
+        }
+
+        /*
+        Clap value
+        */
+        public enum CLAP : byte
+        {
+            OFF = 0x00,
+            ON
+        }
+
         public const byte BROADCAST_DATA_AVATAR_ICON = 0x00;
 
         /*

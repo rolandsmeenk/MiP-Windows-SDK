@@ -46,14 +46,25 @@ namespace MipWindowLib.MipRobot
         public MipRobotConstants.PING_RESPONSE BootMode { get; private set; }
         public event EventHandler<MipRobotConstants.PING_RESPONSE> MipBootModeHandler;
 
-        public byte GameMode { get; private set; }
-        public EventHandler<byte> MipGameModeHandler;
+        public MipRobotConstants.GAME_MODE GameMode { get; private set; }
+        public EventHandler<MipRobotConstants.GAME_MODE> MipGameModeHandler;
 
         public byte WeightLevel { get; private set; }
         public EventHandler<byte> MipWeightLevelHandler;
 
         public bool LeaningForward { get; private set; }
         public EventHandler<bool> MipLeaningForwardHandler;
+
+        public EventHandler<MipRobotConstants.GESTURE> MipGestureDetectedHandler;
+        public EventHandler<MipRobotConstants.RADAR_RESPONSE> MipRadarResponseHandler;
+
+        public MipRobotConstants.HEAD_LED HeadLight1 { get; set; }
+        public MipRobotConstants.HEAD_LED HeadLight2 { get; set; }
+        public MipRobotConstants.HEAD_LED HeadLight3 { get; set; }
+        public MipRobotConstants.HEAD_LED HeadLight4 { get; set; }
+
+        public delegate void HeadLedDelegate(object sender, MipRobotConstants.HEAD_LED light1, MipRobotConstants.HEAD_LED light2, MipRobotConstants.HEAD_LED light3, MipRobotConstants.HEAD_LED light4);
+        public HeadLedDelegate MipHeadLedHandler;
 
         public MipRobot() : base()
         {
@@ -320,6 +331,13 @@ namespace MipWindowLib.MipRobot
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_TOY_ACTIVATED_STATUS, (byte)status).AsAsyncAction();
         }
 
+        /// <summary>
+        /// Command to drive with rate and time
+        /// </summary>
+        /// <param name="toward">Indicates forward driving</param>
+        /// <param name="rate">[0,30] </param>
+        /// <param name="time">Time in 7 milliseconds intervals [0,255]</param>
+        /// <returns></returns>
         private IAsyncAction MipDriveWithRateAndTime(bool toward, int rate, int time)
         {
             MipRobotConstants.COMMAND_CODE type = toward ? MipRobotConstants.COMMAND_CODE.DRIVE_FORWARD_WITH_TIME : MipRobotConstants.COMMAND_CODE.DRIVE_BACKWARD_WITH_TIME;
@@ -329,6 +347,12 @@ namespace MipWindowLib.MipRobot
             return SendMipCommand(type, r, t).AsAsyncAction();
         }
 
+        /// <summary>
+        /// Command to turn left or right
+        /// </summary>
+        /// <param name="degree">Angle in intervals of 5 degrees [-90,90]</param>
+        /// <param name="rate">Rotation rate [0, 24]</param>
+        /// <returns></returns>
         private IAsyncAction MipTurnWithRate(int degree, int rate)
         {
             MipRobotConstants.COMMAND_CODE type = degree < 0 ? MipRobotConstants.COMMAND_CODE.TURN_LEFT_BY_ANGLE : MipRobotConstants.COMMAND_CODE.TURN_RIGHT_BY_ANGLE;
@@ -352,7 +376,7 @@ namespace MipWindowLib.MipRobot
                 case (byte)MipRobotConstants.COMMAND_CODE.GET_GAME_MODE:
                     if (data.Length == 2)
                     {
-                        GameMode = data[1];
+                        GameMode = BaseService.ConvertEnumFromInt<MipRobotConstants.GAME_MODE>(data[1]);
 
                         MipGameModeHandler?.Invoke(this, GameMode);
                     }
@@ -360,7 +384,8 @@ namespace MipWindowLib.MipRobot
                 case (byte)MipRobotConstants.COMMAND_CODE.GET_STATUS:
                     if (data.Length == 3)
                     {
-                        BatteryLevel = data[1];
+                        // 0x4D(4.0V) - 0x7C(6.4V)
+                        BatteryLevel = ((data[1] - 0x4D) / (0x7C - 0x4D)) * 100; 
                         Position = BaseService.ConvertEnumFromInt<MipRobotConstants.POSITION_VALUE>(data[2]);
 
                         MipBatteryLevelHandler?.Invoke(this, BatteryLevel);
@@ -418,13 +443,13 @@ namespace MipWindowLib.MipRobot
                     }
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.RECEIVE_IR_COMMAND:
-                    //TODO callback
+                    Debug.WriteLine("TODO IR Commands");
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.GET_WEIGHT_LEVEL:
                     if (data.Length == 2)
                     {
                         WeightLevel = data[1];
-                        LeaningForward = WeightLevel < 0xd3;
+                        LeaningForward = WeightLevel < 0xD3;
 
                         MipWeightLevelHandler?.Invoke(this, WeightLevel);
                         MipLeaningForwardHandler?.Invoke(this, LeaningForward);
@@ -446,19 +471,25 @@ namespace MipWindowLib.MipRobot
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.SET_HEAD_LED:
                     {
-                        //MipBootModeHandler?.Invoke(this, BootMode);
+                        HeadLight1 = BaseService.ConvertEnumFromInt<MipRobotConstants.HEAD_LED>(data[1]);
+                        HeadLight2 = BaseService.ConvertEnumFromInt<MipRobotConstants.HEAD_LED>(data[2]);
+                        HeadLight3 = BaseService.ConvertEnumFromInt<MipRobotConstants.HEAD_LED>(data[3]);
+                        HeadLight4 = BaseService.ConvertEnumFromInt<MipRobotConstants.HEAD_LED>(data[4]);
+
+                        MipHeadLedHandler?.Invoke(this, HeadLight1, HeadLight2, HeadLight3, HeadLight4);
                     }
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.CLAPS_DETECTED:
-                    Debug.WriteLine("claps");
+                    Debug.WriteLine("TODO claps");
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.GESTURE_DETECTED:
-                    Debug.WriteLine("gesture {0}", BaseService.ConvertEnumFromInt<MipRobotConstants.GESTURE>(data[1]));
+                    MipGestureDetectedHandler?.Invoke(this, BaseService.ConvertEnumFromInt<MipRobotConstants.GESTURE>(data[1]));
                     break;
                 case (byte)MipRobotConstants.COMMAND_CODE.RADAR_RESPONSE:
-                    Debug.WriteLine("radar {0}", BaseService.ConvertEnumFromInt<MipRobotConstants.RADAR_RESPONSE>(data[1]));
+                    MipRadarResponseHandler?.Invoke(this, BaseService.ConvertEnumFromInt<MipRobotConstants.RADAR_RESPONSE>(data[1]));
                     break;
                 default:
+                    Debug.WriteLine("Unhandled receive data {0}", data[0]);
                     break;
             }
         }
