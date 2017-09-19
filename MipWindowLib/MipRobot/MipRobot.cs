@@ -262,14 +262,28 @@ namespace MipWindowLib.MipRobot
         /*
         LEDs
         */
+        public IAsyncAction SetMipHeadLeds(MipRobotConstants.HEAD_LED led)
+        {
+            return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_HEAD_LED, (byte)led, (byte)led, (byte)led, (byte)led).AsAsyncAction();
+        }
+
         public IAsyncAction SetMipHeadLeds(MipRobotConstants.HEAD_LED led1, MipRobotConstants.HEAD_LED led2, MipRobotConstants.HEAD_LED led3, MipRobotConstants.HEAD_LED led4)
         {
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.SET_HEAD_LED, (byte)led1, (byte)led2, (byte)led3, (byte)led4).AsAsyncAction();
         }
 
-        public IAsyncAction SetMipChestLedFlashingWithColor(byte red, byte green, byte blue, byte timeoff)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        /// <param name="timeOn">Time in 20 millisecond intervals</param>
+        /// <param name="timeOff">Time in 20 millisecond intervals</param>
+        /// <returns></returns>
+        public IAsyncAction SetMipChestLedFlashingWithColor(byte red, byte green, byte blue, byte timeOn, byte timeOff)
         {
-            return SendMipCommand(MipRobotConstants.COMMAND_CODE.FLASH_CHEST_RGB_LED, red, green, blue, timeoff).AsAsyncAction();
+            return SendMipCommand(MipRobotConstants.COMMAND_CODE.FLASH_CHEST_RGB_LED, red, green, blue, timeOn, timeOff).AsAsyncAction();
         }
 
         public IAsyncAction SetMipChestLedWithColor(byte red, byte green, byte blue, byte fadeIn)
@@ -364,7 +378,9 @@ namespace MipWindowLib.MipRobot
 
         private async Task<bool> SendMipCommand(MipRobotConstants.COMMAND_CODE type, params byte[] data)
         {
-            return await base.SendCommand((byte)type, data);
+            bool result = await base.SendCommand((byte)type, data);
+            await Task.Delay(50);
+            return result;
         }
 
         //Implement Override Functions

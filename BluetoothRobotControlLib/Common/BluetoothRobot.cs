@@ -36,11 +36,11 @@ namespace BluetoothRobotControlLib.Common
 
             bool ok = true;
 
-            if (Services.ContainsKey(BaseService.TYPE.RECEIVE_DATA))
-            {
-                ReceiveDataService receiveDataService = (ReceiveDataService)Services[BaseService.TYPE.RECEIVE_DATA];
-                ok = await receiveDataService.NeedReceiveData(true, DidCharacteristicNotify);
-            }
+            //if (Services.ContainsKey(BaseService.TYPE.RECEIVE_DATA))
+            //{
+            //    ReceiveDataService receiveDataService = (ReceiveDataService)Services[BaseService.TYPE.RECEIVE_DATA];
+            //    ok = await receiveDataService.NeedReceiveData(true, DidCharacteristicNotify);
+            //}
 
             if (ok)
             {
