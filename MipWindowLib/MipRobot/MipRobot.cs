@@ -189,11 +189,26 @@ namespace MipWindowLib.MipRobot
         */
         public IAsyncAction MipDrive(Vector2 vector)
         {
-            byte driveValue = (byte)Math.Round(Math.Min(1, Math.Abs(vector.Y)) * 32);
-            byte turnValue = (byte)Math.Round(Math.Min(1, Math.Abs(vector.X)) * 32);
+            byte driveValue = (byte)Math.Round(Math.Min(1, Math.Abs(vector.Y)) * 32); // range 0x00 - 0x20
+            byte turnValue = (byte)Math.Round(Math.Min(1, Math.Abs(vector.X)) * 32); // range 0x00 - 0x20
 
-            driveValue += (vector.Y > 0) ? (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.FW_SPEED1 : (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.BW_SPEED1;
-            turnValue += (vector.X > 0) ? (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.RIGHT_SPEED1 : (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.LEFT_SPEED1;
+            if (driveValue > 0)
+            {
+                driveValue += (vector.Y > 0) ? (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.FW_SPEED1 : (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.BW_SPEED1;
+            }
+
+            if (turnValue > 0)
+            {
+                turnValue += (vector.X > 0) ? (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.RIGHT_SPEED1 : (byte)MipRobotConstants.DRIVE_CONTINOUS_VALUE.LEFT_SPEED1;
+            }
+
+            // BYTE 1 Forward: 0x01(slow)~0x20(fast) Backward: 0x21(slow)~0x40(fast)
+            // BYTE 2 : Right spin:0x41(slow)~0x60(fast) 0x61(slow)~0x80(fast)
+            // BYTE 1 Crazy Fw:0x81(slow)~0xA0(fast) OR Crazy Bw:0xA1(slow)~0xC0(fast) |                                                                                                                                               |
+            // BYTE 2: Crazy Right spin: 0xC1(slow)~0xE0(fast) OR Crazy Left spin: 0xE1(slow)~0xFF(fast)
+
+            // 0x01, 0x41, langzaam rondje naar voren en rechtsaf
+            // 0x21, 0x61,langaam achteruit en linksaf
 
             return SendMipCommand(MipRobotConstants.COMMAND_CODE.DRIVE_CONTINOUS, driveValue, turnValue).AsAsyncAction();
         }
